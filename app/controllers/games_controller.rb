@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  before_action :set_game, only [:show, :update, :destroy]
+  before_action :set_game, only: [:show, :update, :destroy]
 
   def index
     @games = Game.all
@@ -28,6 +28,15 @@ class GamesController < ApplicationController
   def destroy
     @game.destroy
     render json: { message: 'See ya!'}, status: :ok
+  end
+
+  def form
+    @game = params[:id] ? Game.find(params[:id]) : Game.new
+    render partial: 'form'
+  end
+
+  def show
+    render partial: 'game', locals: { game: @game }
   end
 
   private
